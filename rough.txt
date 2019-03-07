@@ -1,0 +1,144 @@
+1.) (I.)   Exception is an unexpected/unwanted event that disrupts the normal flow of execution of our program.In most of the cases 
+           it is caused by our program.for example - 
+              Due to wrong input we can get NumberFormatException,when we are trying to call any method with null refrenced we will get 
+              NullPointerException,trying to access array with higher index than its size we will get ArrayIndexOutOfBoundException etc.
+           Where as Error is also an unwanted event but it is caused mainly due to lack of system resources.like-
+           StackOverFlow Error ,OutOfMemory Error etc.
+    (II.)  Exceptions are recoverable where as Errors are not.
+    (III.) We are able to handle Exception either by using try-catch block or by using throws keyword where as we can not handle the
+           error as being a programer.
+    (IV.)  Exception are partially checked where as Errors are unchecked.
+
+
+2.) (I.)   try is a keyword applicable for block, which is use to place the Exception causing code i.e, In our program if there is a chance to raised the
+           Exception then compulsary we need to place that code inside try block.for example-
+              try
+	       {
+	         System.out.println(10/0);
+	       }
+           And it is recommended to keep try block as small as possible because the statement which are placed after the Exception 
+           causing statement need not be execute always.
+           We use this block either with catch or with finally,and if we define a try block without corresponding catch block or 
+           finally block we will get compile time Error saying try without catch or finnaly.
+
+
+    (II.)  catch is a keyword applicable for block which is use to hold the Exception handling code i.e, if any Exception raised in try block then
+           we can define the corresponding handling code here.for example -
+           catch(ArrithmaticException e)
+	   {
+	     System.out.println(e.printStackTrace());
+           }
+           We can not use catch block separetaly otherwise we will get compile time error saying catch without try.
+    (III.) finally is a keyword applicable for block which is use for clean up activity.And this is the only block which execute always either
+           Exception is raised in try block or not.for example-
+           In our program there is require to access data from database in try block so we need to open database connection and after accessing
+	   data from database it is mandatory to close the connection at any cost otherwise we may loss our some important data.
+	   for this we need a block which execute always at any cost either exception raised or not.for this purpose finally block
+	   comes into the picture. 
+     
+     (IV.) throw is a keyword which is use to create exception object explicitly and handover to the jvm manually.As we know that if 
+           any exception is raised in our program then the method in which it is raised is responsible to create Exception object and 
+           handover to the jvm implicitly but According to our bussiness requirement if somewhere it is require to create Exception 
+           object explicitly and handover to the jvm manually for this purpose we have to use throw keyword.let us take an example to
+           explain this .
+           Take an example of a bank in which two functionality are available there as withdraw and deposite .And one field is 
+	   available as balance .Inside withdraw if an user try to withdraw the money then it will check the ammount with the available
+	   balance and if it less than the available balance it will process the request otherwise it will raise the exception 
+	   Saying 'Insufficient balance' ,so for this purpose compulsary we need to thow exception and we do this by using throw keyword.
+     (V.)  throws is a keyword which is use to deligate the responsiblity to the caller (either method or jvm) to handle the exception raised 
+           in our application.By using this keyword we don't handle the exception ,we just delegate the responsiblity .whenever a checked
+           exception is raised in our program we can delegate the responsibility to the caller by using throws keyword and
+       
+
+3.)   The exception which are checked by the compiler for smooth execution at runtime is called checked Exception.for example-
+      IOException,InterruptedIOException ,ServletException,InterruptedException,FileNotFoundException etc. 
+      where as the exceptions which are not checked by the compiler are known as unchecked exception.like-
+      RuntimeException,ArithmaticException,NullPointerException,ClassCastException,IndexOutOfBoundException,
+      ArrayIndexOutOfBoundException.etc
+          As we know that Throwable class is the root class for all the java Exception .And Throwable class has two child class
+	  Error and Exception .Error class and it's child class and RuntimeException and it's child class which is child class of 
+	  Exception are defined as an unchecked exception,other than this all are checked exception.Actually all the Exception 
+	  which causes big impact upon if not checked by compiler is categorise as checked exception.Means because of that particular
+	  Exception internally too many operation is going to be affected are categorise as checked exception else all are unchecked.
+
+
+4.)   To meet programing requirement sometimes we have to define our own Exception class such type of exception are called Customised Exception
+      According to our bussiness requirement if we have to throw our own exception and which are not available in java 
+      predefined Exception classes then we should go for customised Exception.Our Exception class should extend RuntimeException or
+      it's child class that means unchecked exception otherwise we will not meet the benefit of our customised exception class.
+      for example-
+
+       import java.util.*;
+       class TooOldException extends RuntimeException
+         {
+	   TooOldException(String s)
+	    {
+		super(s);
+	    }
+          }
+        class TooYoungException extends RuntimeException 
+          {
+	    TooYoungException(String s)
+	      {
+		super(s);
+	      }
+           }
+        class Test11
+          {
+	    public static void main(String[] args)
+	     {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("please enter the age");
+		int x=sc.nextInt();
+		if(x>60)
+		{
+			throw new TooOldException("you are too old");
+		}
+          else if(x<18)
+		{
+			throw new TooYoungException("you are too young");
+		}
+		else
+		{
+			System.out.println("you will get match soon");
+		}
+		
+       	     }
+          }
+5.)    Actually Exception handling means that providing an alternative way to excute the rest of the program normally 
+       whenever an Exception is raised the method in which it is raised is responsible to create an Exception object and handover to the caller(either method or jvm)
+       Now jvm will check that is .And in java we can do this by two ways.
+    (I.) by using try-catch :-
+                             we can handle the exception by placing exception causing code inside try block and placing alternate
+			     handling code inside catch block.for example-
+			      try{
+			      ------
+			      System.out.println(10/0);
+			      ------
+			      }
+			      catch(ArithmaticException e)
+			      {
+			       System.out.println(e.getMassage);
+			       }
+
+    (II.) by throws keyword :- 
+                             By using throws keyword we delegate the responsiblity to the caller(it may be method or jvm)
+			     then caller is responsible to handle that checked exception.And throws keyword is required only 
+			     to convence compiler and it doesn't prevent abnormal termination of the program .It is required 
+			     only for checked exception and uses of throws keyword for unchecked Exception is useless.for example-
+			      class Test
+			      {
+			       public static void main(String[] args) throws InterruptedException
+			       {
+			       m1();
+			       }
+			       public static void m1() throws InterruptedException
+			       {
+			        m2();
+				}
+				public static void m2() throws InterruptedException
+				{
+				Thread.sleep(5000);
+				}
+
+
